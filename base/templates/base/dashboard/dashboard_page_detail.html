@@ -1,0 +1,14 @@
+<h1>Page: {{ page.title|default:page.slug }}</h1>
+<p>Since: {{ since }}</p>
+<p>Total sessions: {{ sessions_total }}</p>
+
+<h2>Clicks by element</h2>
+<ul>
+  {% for row in clicks %}
+    <li>{{ row.element_key }} — {{ row.total }}</li>
+  {% empty %}
+    <li>No clicks recorded.</li>
+  {% endfor %}
+</ul>
+
+<p><a href="{% url 'dashboard_home' %}">Back to dashboard</a></p>

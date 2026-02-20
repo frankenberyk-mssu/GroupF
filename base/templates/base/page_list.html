@@ -1,0 +1,13 @@
+<h1>Test Pages</h1>
+
+<ul>
+  {% for p in pages %}
+    <li>
+      <a href="{% url 'page_detail' p.slug %}">{{ p.title|default:p.slug }}</a>
+    </li>
+  {% empty %}
+    <li>No pages yet.</li>
+  {% endfor %}
+</ul>
+
+<p><a href="{% url 'dashboard_home' %}">Dashboard</a></p>

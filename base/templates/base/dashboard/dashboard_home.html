@@ -1,0 +1,28 @@
+<h1>Dashboard</h1>
+<p>Since: {{ since }}</p>
+
+<h2>Sessions per day</h2>
+<ul>
+  {% for day, total in per_day %}
+    <li>{{ day }} — {{ total }}</li>
+  {% endfor %}
+</ul>
+
+<h2>Top clicks (last 7 days)</h2>
+<ul>
+  {% for row in top_clicks %}
+    <li>
+      <a href="{% url 'dashboard_page_detail' row.page__slug %}">{{ row.page__slug }}</a>
+      — {{ row.element_key }} ({{ row.total }})
+    </li>
+  {% empty %}
+    <li>No click data.</li>
+  {% endfor %}
+</ul>
+
+<h2>Pages</h2>
+<ul>
+  {% for p in pages %}
+    <li><a href="{% url 'dashboard_page_detail' p.slug %}">{{ p.title|default:p.slug }}</a></li>
+  {% endfor %}
+</ul>

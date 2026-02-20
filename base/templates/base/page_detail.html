@@ -1,0 +1,43 @@
+<!-- templates/base/page_detail.html -->
+<!-- This renders your stored raw_html and exposes page/session to JS -->
+
+<h1>{{ page.title|default:page.slug }}</h1>
+
+<div id="test-page-root">
+  {{ raw_html }}
+</div>
+
+<script>
+  window.TRACKING = {
+    page_slug: "{{ page.slug }}",
+    session_key: "{{ session_key }}",
+    track_url: "{% url 'track_event' %}"
+  };
+</script>
+
+<script>
+  // ultra-minimal tracker (you can move to static file later)
+  async function track(payload) {
+    payload.page_slug = window.TRACKING.page_slug;
+    payload.session_key = window.TRACKING.session_key;
+
+    await fetch(window.TRACKING.track_url, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(payload),
+      credentials: "same-origin",
+    });
+  }
+
+  document.addEventListener("click", (e) => {
+    const el = e.target.closest("[data-track]");
+    if (!el) return;
+
+    track({
+      event_type: "click",
+      element_key: el.getAttribute("data-track") || "",
+      text: (el.innerText || "").slice(0, 300),
+      data: {x: e.clientX, y: e.clientY},
+    });
+  });
+</script>

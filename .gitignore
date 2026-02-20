@@ -1,0 +1,74 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+*.pyo
+
+
+# =========================
+# Virtual Environments
+# =========================
+.venv/
+venv/
+env/
+ENV/
+
+# Poetry
+poetry.lock
+
+# (optional — remove this line if you want lock file committed)
+# poetry.lock
+
+
+# Django migrations cache
+*/migrations/__pycache__/
+
+# =========================
+# Environment Variabless
+# =========================
+.env
+.env.*
+*.env
+
+# =========================
+# IDE / Editor
+# =========================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Testing / Coverage
+# =========================
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+
+# =========================
+# Logs and stuff
+# =========================
+*.log
+
+
+# =========================
+# Node / Electron Stuff
+# =========================
+electron_app/node_modules/
+electron_app/dist/
+electron_app/out/
+electron_app/build/
+electron_app/.env
+electron_app/npm-debug.log*
