@@ -7,7 +7,7 @@ todo:
 - Study the database layout and see if we need to add / change things
 - Dashboard and homepage where you pick a page to view are UGLY and plain, need some style
 
-# Important Note
+# Important Notes
 
 Note, the admin user is 
 ```bash
@@ -21,9 +21,32 @@ You can add users from /admin dashboard or via console:
 python manage.py createsuperuser
 ```
 
+## admin
+Going to http://127.0.0.1:8000/admin/ lets you browse data in a raw format and create pages
+![alt text](media/admin1.png)
+
+You can create pages with raw html like this:
+![alt text](media/admin2.png) 
+
+
+## What's working right now?
+1. When you add a page in the admin you can then visit it from the home page
+2. You can view pages in the dashboard and look at session stats (just cliks right now)
+3. There is a view that collects tracked events and you can see them in the debug log while you run your webserver, they look like this:
+
+```bash
+[19/Feb/2026 18:43:42] "GET /pages/test_page/ HTTP/1.1" 200 5800
+[19/Feb/2026 18:44:56] "POST /track/event/ HTTP/1.1" 200 12
+[19/Feb/2026 18:44:56] "POST /track/event/ HTTP/1.1" 200 12
+[19/Feb/2026 18:44:56] "POST /track/event/ HTTP/1.1" 200 12
+[19/Feb/2026 18:44:57] "POST /track/event/ HTTP/1.1" 200 12
+```
+
+4. the "track_event" function and tracking models are pretty open ended where we can sends any kind of data we want, explore the base/models.py for some ideas
+
+---
+
 # Web App Framework
-
-
 
 ## Getting started (Poetry)
 
