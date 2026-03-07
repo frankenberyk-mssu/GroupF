@@ -2,15 +2,12 @@
 "We may be group F but we are going for the A+"
 
 todo:
-- We need some branding!
-- Identify other things we can track than clicks
-- Study the database layout and see if we need to add / change things
-- Dashboard and homepage where you pick a page to view are UGLY and plain, need some style
-
-Ben: Feedback
-- user could add notes to go with their session in a sticky header or footer or something
-- "sticky" area could all provide navigation back to the landing page "/"
-
+- user could add notes to go with their session in a sticky header or footer or something and link to dashboard
+  - (team) visual mockup
+  - (team) optional html mockup
+- We can add some live data to the bottom of the pages themselves ( meh.com style )
+  - (team) visual mockup and/or data sets to use
+  - (team) optional html mockup
 
 
 # Important Notes
