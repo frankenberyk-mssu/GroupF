@@ -1,14 +1,37 @@
-<h1>Page: {{ page.title|default:page.slug }}</h1>
-<p>Since: {{ since }}</p>
-<p>Total sessions: {{ sessions_total }}</p>
+{% extends "base.html" %}
 
-<h2>Clicks by element</h2>
-<ul>
+{% block content %}
+
+<h1 class="text-2xl font-semibold mb-2">
+  Page: {{ page.title|default:page.slug }}
+</h1>
+
+<p class="text-sm text-synapse-blue/70 mb-1">
+  Since <span class="font-medium">{{ since }}</span>
+</p>
+
+<p class="text-sm text-synapse-blue/70 mb-8">
+  Total sessions <span class="font-medium">{{ sessions_total }}</span>
+</p>
+
+<h2 class="text-lg font-semibold mb-3">Clicks by element</h2>
+
+<ul class="space-y-2 mb-8">
   {% for row in clicks %}
-    <li>{{ row.element_key }} — {{ row.total }}</li>
+    <li class="flex justify-between rounded-lg border border-blue-100 bg-white px-4 py-2">
+      <span class="font-medium">{{ row.element_key }}</span>
+      <span>{{ row.total }}</span>
+    </li>
   {% empty %}
-    <li>No clicks recorded.</li>
+    <li class="text-synapse-blue/60 py-4">No clicks recorded.</li>
   {% endfor %}
 </ul>
 
-<p><a href="{% url 'dashboard_home' %}">Back to dashboard</a></p>
+<a
+  href="{% url 'dashboard_home' %}"
+  class="inline-block text-sm border border-synapse-blue/30 px-4 py-2 rounded-lg hover:bg-synapse-blue hover:text-white transition"
+>
+  Back to dashboard
+</a>
+
+{% endblock %}

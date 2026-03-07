@@ -7,6 +7,12 @@ todo:
 - Study the database layout and see if we need to add / change things
 - Dashboard and homepage where you pick a page to view are UGLY and plain, need some style
 
+Ben: Feedback
+- user could add notes to go with their session in a sticky header or footer or something
+- "sticky" area could all provide navigation back to the landing page "/"
+
+
+
 # Important Notes
 
 Note, the admin user is 

@@ -1,28 +1,71 @@
-<h1>Dashboard</h1>
-<p>Since: {{ since }}</p>
+{% extends "base.html" %}
 
-<h2>Sessions per day</h2>
-<ul>
+
+
+{% block content %}
+
+<h1 class="text-2xl font-semibold mb-6">Dashboard</h1>
+
+<p class="text-sm text-synapse-blue/70 mb-8">
+  Tracking since <span class="font-medium">{{ since }}</span>
+</p>
+
+<!-- Sessions -->
+<h2 class="text-lg font-semibold mb-3">Sessions per day</h2>
+
+<ul class="space-y-2 mb-8">
   {% for day, total in per_day %}
-    <li>{{ day }} — {{ total }}</li>
+    <li class="flex justify-between rounded-lg border border-blue-100 bg-white px-4 py-2">
+      <span>{{ day }}</span>
+      <span class="font-medium">{{ total }}</span>
+    </li>
   {% endfor %}
 </ul>
 
-<h2>Top clicks (last 7 days)</h2>
-<ul>
+<!-- Top Clicks -->
+<h2 class="text-lg font-semibold mb-3">Top clicks (last 7 days)</h2>
+
+<ul class="space-y-2 mb-8">
   {% for row in top_clicks %}
-    <li>
-      <a href="{% url 'dashboard_page_detail' row.page__slug %}">{{ row.page__slug }}</a>
-      — {{ row.element_key }} ({{ row.total }})
+    <li class="flex justify-between items-center rounded-lg border border-blue-100 bg-white px-4 py-2">
+
+      <div>
+        <a
+          href="{% url 'dashboard_page_detail' row.page__slug %}"
+          class="font-medium hover:underline"
+        >
+          {{ row.page__slug }}
+        </a>
+
+        <span class="text-sm text-synapse-blue/60">
+          — {{ row.element_key }}
+        </span>
+      </div>
+
+      <span class="text-sm font-medium">
+        {{ row.total }}
+      </span>
+
     </li>
   {% empty %}
-    <li>No click data.</li>
+    <li class="text-synapse-blue/60 py-4">No click data.</li>
   {% endfor %}
 </ul>
 
-<h2>Pages</h2>
-<ul>
+<!-- Pages -->
+<h2 class="text-lg font-semibold mb-3">Pages</h2>
+
+<ul class="space-y-2">
   {% for p in pages %}
-    <li><a href="{% url 'dashboard_page_detail' p.slug %}">{{ p.title|default:p.slug }}</a></li>
+    <li>
+      <a
+        href="{% url 'dashboard_page_detail' p.slug %}"
+        class="block rounded-lg border border-blue-100 bg-white px-4 py-3 hover:border-synapse-blue hover:shadow-sm transition"
+      >
+        {{ p.title|default:p.slug }}
+      </a>
+    </li>
   {% endfor %}
 </ul>
+
+{% endblock %}

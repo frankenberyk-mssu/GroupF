@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Synapse</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        synapse: {
+          cream: "#f4efe6",
+          blue: "#3b4a6b",
+          lightblue: "#6f8cc7"
+        }
+      }
+    }
+  }
+}
+</script>
+
+</head>
+
+<body class="min-h-screen flex items-start justify-center py-20 px-6 bg-synapse-cream text-synapse-blue">
+
+<div class="w-full max-w-3xl flex flex-col items-center">
+
+    {% block logo %}
+    <a href="/"><img src="/static/logo.png" alt="Synapse Logo" class="mb-12"></a>
+    {% endblock %}
+
+  <div class="w-full bg-white/70 backdrop-blur rounded-xl border border-blue-200 shadow-sm p-8">
+
+      {% block content %}
+      {% endblock %}
+
+  </div>
+
+</div>
+
+</body>
+</html>

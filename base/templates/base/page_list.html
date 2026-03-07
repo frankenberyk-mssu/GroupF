@@ -1,13 +1,50 @@
-<h1>Test Pages</h1>
+{% extends "base.html" %}
 
-<ul>
-  {% for p in pages %}
-    <li>
-      <a href="{% url 'page_detail' p.slug %}">{{ p.title|default:p.slug }}</a>
-    </li>
-  {% empty %}
-    <li>No pages yet.</li>
-  {% endfor %}
-</ul>
+{% block content %}
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-semibold tracking-tight">Synapse Pages</h1>
 
-<p><a href="{% url 'dashboard_home' %}">Dashboard</a></p>
+      <a
+        target="_blank"
+        href="/admin/"
+        class="text-sm border border-synapse-blue/30 px-4 py-2 rounded-lg hover:bg-synapse-blue hover:text-white transition"
+      >
+        Admin
+      </a>
+
+      <a
+        target="_blank"
+        href="{% url 'dashboard_home' %}"
+        class="text-sm border border-synapse-blue/30 px-4 py-2 rounded-lg hover:bg-synapse-blue hover:text-white transition"
+      >
+        Dashboard
+      </a>
+
+    </div>
+
+    <ul class="space-y-3">
+
+      {% for p in pages %}
+      <li>
+        <a
+          href="{% url 'page_detail' p.slug %}"
+          class="block rounded-lg border border-blue-100 bg-white px-4 py-3 hover:border-synapse-blue hover:shadow-sm transition"
+        >
+          <div class="font-medium">
+            {{ p.title|default:p.slug }}
+          </div>
+
+          <div class="text-sm text-synapse-blue/60">
+            {{ p.slug }}
+          </div>
+        </a>
+      </li>
+      {% empty %}
+      <li class="text-center text-synapse-blue/60 py-6">
+        No pages yet.
+      </li>
+      {% endfor %}
+
+    </ul>
+
+{% endblock %}
