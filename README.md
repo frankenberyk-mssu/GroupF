@@ -53,30 +53,14 @@ You can create pages with raw html like this:
 
 ## Getting started (Poetry)
 
-1) Install Poetry
+1) Install Django (make sure you have latest python installed)
 
 ```bash
-pip install poetry
+pip install django
 ```
 
-2) Install project dependencies (run from project root where manage.py exists)
 
-```bash
-poetry install
-```
 
-3) Activate the virtual environment
-
-```bash
-poetry shell
-```
-
-4) Run database migrations ( I am checking in the db.sqlite so you don't have to do this unless you blow away the database and want a new one )
-
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
 
 5) Start the development server
 
@@ -86,6 +70,15 @@ python manage.py runserver
 
 Open in browser:
 http://127.0.0.1:8000/
+
+---
+
+To run database migrations ( I am checking in the db.sqlite so you don't have to do this unless you blow away the database and want a new one )
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
 
 ---
 
