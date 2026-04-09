@@ -1,6 +1,47 @@
 # Group F Project
 "We may be group F but we are going for the A+"
 
+## Using AI with the models
+
+One easy way to get help from AI on this project is to point it at `base/models.py` and ask it to write queries, reports, or dashboards from the schema we already have.
+
+Good prompt ideas:
+
+```text
+Look at base/models.py and write a Django ORM query that shows the most clicked elements per page in the last 7 days.
+```
+
+```text
+Using the models in base/models.py, help me find sessions that reached 75% scroll depth and then clicked checkout.
+```
+
+```text
+Read base/models.py and suggest a few useful analytics queries for Event, VisitSession, Goal, and Conversion.
+```
+
+```text
+Based on base/models.py, write SQL and Django ORM examples for hover rate, scroll depth, and click-through analysis.
+```
+
+Best results usually come from asking AI to:
+
+- read `base/models.py` first
+- use Django ORM unless you specifically want SQL
+- explain which model fields the query depends on
+- give both a quick version and a more production-ready version if needed
+
+## Summary of recent changes
+
+Today we expanded the project from basic click tracking into a more complete interaction analytics prototype:
+
+- added hover tracking through the existing event pipeline, saved as `Event.TYPE_CUSTOM` with `data.custom_type = "hover"`
+- added throttled scroll tracking with milestone depth events at `10/25/50/75/90/100%`
+- upgraded the page detail dashboard to show event mix, custom signals, top targets, recent activity, and scroll reach
+- added a Chart.js interaction mix chart to the page detail dashboard
+- refreshed the main dashboard so it highlights pages, top clicks, scroll leaders, and overall interaction volume
+- added persistent dashboard navigation in the shared base template for easy jumps to `/` and `/dashboard/`
+- dockerized the app with `Dockerfile`, `docker-compose.yml`, and an entrypoint that keeps using persisted `db.sqlite3`
+
 todo:
 - user could add notes to go with their session in a sticky header or footer or something and link to dashboard
   - (team) visual mockup
