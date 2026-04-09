@@ -73,6 +73,39 @@ http://127.0.0.1:8000/
 
 ---
 
+## Docker
+
+Simple Docker setup keeps using SQLite, with the DB persisted in a Docker volume.
+
+Build and run:
+
+```bash
+docker compose up --build
+```
+
+Then open:
+http://127.0.0.1:8000/
+
+Notes:
+
+- the container runs `python manage.py migrate` on startup
+- the checked-in `db.sqlite3` is copied into the persistent volume the first time the container starts
+- later runs keep using the persisted SQLite file at `/app/data/db.sqlite3`
+
+To stop:
+
+```bash
+docker compose down
+```
+
+To remove the persisted SQLite volume too:
+
+```bash
+docker compose down -v
+```
+
+---
+
 To run database migrations ( I am checking in the db.sqlite so you don't have to do this unless you blow away the database and want a new one )
 
 ```bash

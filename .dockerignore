@@ -1,0 +1,12 @@
+.git
+.gitignore
+.idea
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3-shm
+*.sqlite3-wal
+media
+uv.lock

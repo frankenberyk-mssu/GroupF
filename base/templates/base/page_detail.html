@@ -31,6 +31,15 @@
     });
   }
 
+  function buildSelector(el) {
+    if (!el) return "";
+    if (el.id) return `#${el.id}`;
+
+    const tag = (el.tagName || "").toLowerCase();
+    const classes = Array.from(el.classList || []).slice(0, 3).join(".");
+    return classes ? `${tag}.${classes}` : tag;
+  }
+
   document.addEventListener("click", (e) => {
     const el = e.target.closest("[data-track]");
     if (!el) return;
@@ -43,6 +52,105 @@
     });
   });
 
+  const hoverCooldownMs = 1500;
+  const hoverSeenAt = new Map();
+  const scrollMilestones = [10, 25, 50, 75, 90, 100];
+  let scrollFlushTimer = null;
+  let maxScrollPctSeen = 0;
+  const reportedScrollMilestones = new Set();
+
+  document.addEventListener("mouseover", (e) => {
+    const el = e.target.closest("[data-track]");
+    if (!el) return;
+
+    const elementKey = el.getAttribute("data-track") || "";
+    const hoverKey = `${window.TRACKING.page_slug}:${elementKey}`;
+    const now = Date.now();
+    const lastSeenAt = hoverSeenAt.get(hoverKey) || 0;
+
+    if (now - lastSeenAt < hoverCooldownMs) return;
+
+    hoverSeenAt.set(hoverKey, now);
+
+    track({
+      event_type: "custom",
+      element_key: elementKey,
+      css_selector: buildSelector(el),
+      text: (el.innerText || "").slice(0, 300),
+      data: {
+        custom_type: "hover",
+        x: e.clientX,
+        y: e.clientY,
+      },
+    });
+  });
+
+  function getScrollMetrics() {
+    const doc = document.documentElement;
+    const scrollTop = window.scrollY || doc.scrollTop || 0;
+    const viewportHeight = window.innerHeight || doc.clientHeight || 0;
+    const docHeight = Math.max(
+      doc.scrollHeight || 0,
+      document.body ? document.body.scrollHeight : 0,
+      viewportHeight
+    );
+    const maxScrollTop = Math.max(docHeight - viewportHeight, 0);
+    const scrollPct = maxScrollTop > 0
+      ? Math.min(100, Math.round((scrollTop / maxScrollTop) * 100))
+      : 100;
+
+    return {
+      scrollTop,
+      viewportHeight,
+      docHeight,
+      maxScrollTop,
+      scrollPct,
+    };
+  }
+
+  function flushScrollDepth() {
+    scrollFlushTimer = null;
+    const metrics = getScrollMetrics();
+    const milestone = scrollMilestones.findLast((point) => maxScrollPctSeen >= point && !reportedScrollMilestones.has(point));
+
+    if (!milestone) return;
+
+    reportedScrollMilestones.add(milestone);
+
+    track({
+      event_type: "scroll",
+      element_key: `scroll_${milestone}`,
+      data: {
+        scroll_pct: milestone,
+        scroll_top: metrics.scrollTop,
+        max_scroll_top: metrics.maxScrollTop,
+        viewport_height: metrics.viewportHeight,
+        document_height: metrics.docHeight,
+        max_scroll_pct_seen: maxScrollPctSeen,
+      },
+    });
+  }
+
+  function scheduleScrollTracking() {
+    const metrics = getScrollMetrics();
+    maxScrollPctSeen = Math.max(maxScrollPctSeen, metrics.scrollPct);
+
+    if (scrollFlushTimer) {
+      clearTimeout(scrollFlushTimer);
+    }
+
+    scrollFlushTimer = setTimeout(flushScrollDepth, 700);
+  }
+
+  window.addEventListener("scroll", scheduleScrollTracking, { passive: true });
+  window.addEventListener("load", scheduleScrollTracking);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden" && scrollFlushTimer) {
+      clearTimeout(scrollFlushTimer);
+      flushScrollDepth();
+    }
+  });
 
 </script>
 

@@ -27,15 +27,37 @@ tailwind.config = {
 
 <body class="min-h-screen flex items-start justify-center py-20 px-6 bg-synapse-cream text-synapse-blue">
 
-<div class="w-full max-w-3xl flex flex-col items-center">
+<div class="w-full {% block page_shell_classes %}max-w-3xl{% endblock %} flex flex-col items-center">
 
     {% block logo %}
     <a href="/"><img src="/static/logo.png" alt="Synapse Logo" class="mb-12"></a>
     {% endblock %}
 
+  <nav class="mb-6 w-full rounded-2xl border border-blue-200 bg-white/75 px-4 py-3 shadow-sm backdrop-blur">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="text-xs font-semibold uppercase tracking-[0.22em] text-synapse-blue/55">
+        Navigation
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <a
+          href="{% url 'page_list' %}"
+          class="inline-flex items-center rounded-full border border-synapse-blue/15 px-4 py-2 text-sm font-medium text-synapse-blue transition hover:border-synapse-blue hover:bg-synapse-blue hover:text-white"
+        >
+          Home
+        </a>
+        <a
+          href="{% url 'dashboard_home' %}"
+          class="inline-flex items-center rounded-full border border-synapse-blue/15 px-4 py-2 text-sm font-medium text-synapse-blue transition hover:border-synapse-blue hover:bg-synapse-blue hover:text-white"
+        >
+          Dashboard
+        </a>
+      </div>
+    </div>
+  </nav>
 
 
-  <div class="w-full bg-white/70 backdrop-blur rounded-xl border border-blue-200 shadow-sm p-8">
+  <div class="w-full {% block content_panel_classes %}bg-white/70 backdrop-blur rounded-xl border border-blue-200 shadow-sm p-8{% endblock %}">
 
       {% block content %}
       {% endblock %}
