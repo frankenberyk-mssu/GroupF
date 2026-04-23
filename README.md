@@ -117,6 +117,7 @@ http://127.0.0.1:8000/
 ## Docker
 
 Simple Docker setup keeps using SQLite, with the DB persisted in a Docker volume.
+The container runs `gunicorn` and serves static files with `whitenoise`, so this is suitable for a basic server deploy.
 
 Build and run:
 
@@ -125,13 +126,15 @@ docker compose up --build
 ```
 
 Then open:
-http://127.0.0.1:8000/
+http://127.0.0.1:8020/
 
 Notes:
 
 - the container runs `python manage.py migrate` on startup
+- the container runs `python manage.py collectstatic` on startup
 - the checked-in `db.sqlite3` is copied into the persistent volume the first time the container starts
 - later runs keep using the persisted SQLite file at `/app/data/db.sqlite3`
+- compose now publishes the app on host port `8020`
 
 To stop:
 

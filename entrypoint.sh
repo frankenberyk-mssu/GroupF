@@ -11,5 +11,6 @@ if [ ! -f "$SQLITE_PATH" ] && [ -f /app/db.sqlite3 ]; then
 fi
 
 python manage.py migrate --noinput
+python manage.py collectstatic --noinput
 
 exec "$@"

@@ -2,11 +2,11 @@ services:
   web:
     build: .
     ports:
-      - "8000:8000"
+      - "8020:8000"
     environment:
       SQLITE_PATH: /app/data/db.sqlite3
-      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1
-      DJANGO_DEBUG: "1"
+      DJANGO_ALLOWED_HOSTS: "synapse.fbstudios.com,localhost,127.0.0.1"
+      DJANGO_DEBUG: "0"
     volumes:
       - groupf_data:/app/data
 
