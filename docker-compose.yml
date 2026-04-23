@@ -6,6 +6,7 @@ services:
     environment:
       SQLITE_PATH: /app/data/db.sqlite3
       DJANGO_ALLOWED_HOSTS: "synapse.fbstudios.com,localhost,127.0.0.1"
+      DJANGO_CSRF_TRUSTED_ORIGINS: "https://synapse.fbstudios.com"
       DJANGO_DEBUG: "0"
     volumes:
       - groupf_data:/app/data
